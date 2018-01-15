@@ -49,19 +49,52 @@ class Dotenv {
 		});
 	}
 
-	public static function feedValue( key: String, value: String ) {
+	public static function feedValue( key: String, value: String )
 		store.set(key, value);
+
+	public static function find( key: String ) : String
+		return fetch(key);
+
+	public static function findInt( key: String ) : Int {
+		var value = fetch(key);
+		return value != null ? Std.parseInt(value) : null;
 	}
 
-	public static function get( key: String, defaultValue: String ) : String {
+	public static function getOptional( key: String, defaultValue: String ) : String {
 		var value = fetch(key);
 		return value != null ? value : defaultValue;
 	}
 
-	public static function getInt( key: String, defaultValue: Int ) : Int {
+	public static function getOptionalInt( key: String, defaultValue: Int ) : Int {
 		var value = fetch(key);
 		var asInt: Null<Int> = value != null ? Std.parseInt(value) : null;
 		return asInt != null ? asInt : defaultValue;
+	}
+
+	public static function get( key: String ) : String {
+		var value = fetch(key);
+
+		if (value == null) {
+			throw 'unmapped key "$key"';
+		}
+
+		return value;
+	}
+
+	public static function getInt( key: String ) : Int {
+		var value = fetch(key);
+
+		if (value == null) {
+			throw 'unmapped key "$key"';
+		}
+
+		var asInt = Std.parseInt(value);
+
+		if (asInt == null) {
+			throw 'value for "$key" is not an integer';
+		}
+
+		return asInt;
 	}
 
 	static function fetch( key: String ) : String {
