@@ -71,11 +71,15 @@ class Dotenv {
 		return asInt != null ? asInt : defaultValue;
 	}
 
-	public static function get( key: String ) : String {
+	public static function get( key: String, ?defaultValue: String ) : String {
 		var value = fetch(key);
 
 		if (value == null) {
-			throw 'unmapped key "$key"';
+			if(defaultValue == null) {
+				throw 'unmapped key "$key"';
+			} else {
+				return defaultValue;
+			}
 		}
 
 		return value;
