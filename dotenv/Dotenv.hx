@@ -55,7 +55,7 @@ class Dotenv {
 	public static function find( key: String ) : String
 		return fetch(key);
 
-	public static function findInt( key: String ) : Int {
+	public static function findInt( key: String ) : Null<Int> {
 		var value = fetch(key);
 		return value != null ? Std.parseInt(value) : null;
 	}
